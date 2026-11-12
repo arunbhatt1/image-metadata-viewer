@@ -1,0 +1,45 @@
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Python cache & build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*$py.class
+build/
+dist/
+*.egg-info/
+*.spec
+.pytest_cache/
+
+# Tool / IDE folders
+.idea/
+.vscode/
+.antigravity/
+.gemini/
+.agent/
+
+# Secrets & local environment
+.env
+*.env
+*.key
+*.pem
+app_settings.json
+
+# Logs & temporary files
+logs/
+*.log
+*.tmp
+tmp/
+temp/
+
+# Exports (prevent accidental commit of private metadata)
+exports/
+
+# OS junk files
+.DS_Store
+Thumbs.db
+desktop.ini
