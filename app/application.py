@@ -12,6 +12,7 @@ from app.config import (
     ConfigManager,
     PreviewSize,
     ThemeMode,
+    get_assets_dir,
     get_logger,
     setup_logging,
 )
@@ -280,7 +281,7 @@ class ImageMetadataViewerApp(ctk.CTk):
 
     def _apply_window_icon(self) -> None:
         """Apply custom precision-instrument icon when running on Windows."""
-        icon_path = Path(__file__).resolve().parent / "assets" / "app_icon.ico"
+        icon_path = get_assets_dir() / "app_icon.ico"
         if icon_path.exists():
             try:
                 self.iconbitmap(default=str(icon_path))

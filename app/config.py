@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import sys
 from dataclasses import asdict, dataclass
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
@@ -125,6 +126,13 @@ class ConfigManager:
     def get_preview_max_px(self) -> int:
         """Return the configured maximum preview dimension in pixels."""
         return PREVIEW_SIZE_MAP.get(self.settings.preview_size, 440)
+
+
+def get_assets_dir() -> Path:
+    """Return the assets directory in source or PyInstaller frozen builds."""
+    if getattr(sys, "frozen", False) and hasattr(sys, "_MEIPASS"):
+        return Path(sys._MEIPASS) / "app" / "assets"  # type: ignore[attr-defined]
+    return Path(__file__).resolve().parent / "assets"
 
 
 def setup_logging(log_dir: Path | None = None) -> logging.Logger:

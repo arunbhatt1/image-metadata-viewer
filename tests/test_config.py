@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from app.config import AppSettings, ConfigManager
+from app.config import AppSettings, ConfigManager, get_assets_dir
 from app.ui.theme import DARK_TOKENS, LIGHT_TOKENS
 
 
@@ -41,4 +41,14 @@ def test_config_manager_persists_preferences_without_sensitive_fields(
     assert reloaded.settings.default_export_format == "csv"
     assert reloaded.settings.preview_size == "large"
     assert reloaded.get_preview_max_px() == 480
+
+
+def test_get_assets_dir_source_and_frozen(monkeypatch, tmp_path: Path) -> None:
+    assets_dir = get_assets_dir()
+    assert (assets_dir / "app_icon.ico").exists()
+    assert (assets_dir / "fonts").exists()
+
+    monkeypatch.setattr("app.config.sys.frozen", True, raising=False)
+    monkeypatch.setattr("app.config.sys._MEIPASS", str(tmp_path), raising=False)
+    assert get_assets_dir() == tmp_path / "app" / "assets"
 

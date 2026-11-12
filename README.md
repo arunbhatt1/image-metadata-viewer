@@ -9,13 +9,20 @@ A local desktop utility for inspecting image properties, EXIF metadata, color di
 
 ![Image Inspector](docs/screenshot.png)
 
+## Download
+
+Grab the latest .exe from the [Releases page](https://github.com/arunbhatt1/image-metadata-viewer/releases). No Python needed.
+
 ## Features
 
-- Runs **100% offline** with zero network requests and zero telemetry.
-- Opens files **read-only** — original images and embedded EXIF tags are never modified, resized, or stripped.
+- Runs 100% offline with zero network requests and zero telemetry.
+- Opens files read-only: original images and embedded EXIF tags are never modified, resized, or stripped.
 - Nothing is uploaded; all metadata parsing and pixel analysis happen locally in memory.
-- **Image Inspector**: Displays orientation-adjusted preview, file properties (name, location, format, byte size, pixel dimensions, aspect ratio, color mode, DPI/PPI resolution, filesystem timestamps), metadata/GPS presence summary, and local color analysis (average RGB/HEX, RGB channel distribution, and 5 dominant color swatches).
-- **EXIF Viewer**: Organizes existing tags into *Camera Information*, *Exposure Information*, *Date and Time*, *Location Information*, and *Image Information*, with live search, raw tag toggle, GPS privacy notice, Copy Value, and Copy All.
+- **Image Inspector**: Displays an orientation-adjusted preview and inspects the loaded image:
+  - File properties: name, location, format, byte size, pixel dimensions, aspect ratio, color mode, DPI/PPI resolution, and filesystem timestamps.
+  - EXIF/GPS summary: metadata presence status and GPS tag indicator.
+  - Color analysis: average RGB/HEX values, RGB channel distribution, and 5 dominant color swatches.
+- **EXIF Viewer**: Organizes existing tags into Camera Information, Exposure Information, Date and Time, Location Information, and Image Information, with live search, raw tag toggle, GPS privacy notice, Copy Value, and Copy All.
 - **Batch Analysis**: Scans multiple images or entire folders on a background thread with progress updates, cancellation, summary metrics, format/EXIF/GPS filters, and a sortable results table.
 - **Compare Images**: Side-by-side previews and property diff table highlighting differences between two selected images.
 - **Export**: Exports single-image or batch metadata to JSON or CSV with destination selection and overwrite confirmation.
@@ -27,6 +34,8 @@ A local desktop utility for inspecting image properties, EXIF metadata, color di
 - **Optional**: `HEIC`, `HEIF` (automatically enabled when `pillow-heif` is installed)
 
 ## Installation
+
+Requires Python 3.12+ (enforced by pinned dependencies such as `numpy==2.5.4`).
 
 1. Clone the repository:
 
@@ -83,18 +92,19 @@ python main.py
 - **Compare Images**: Load **Image A** and **Image B** to inspect previews side-by-side and highlight differing properties.
 - **Settings**: Switch between **Dark**, **Light**, and **System** themes, set the default export format (`JSON` or `CSV`), adjust preview size, or clear the current session.
 
-To run the automated test suite:
+To install development dependencies and run the automated test suite:
 
 ```bash
+pip install -r requirements-dev.txt
 pytest -v
 ```
 
 ## Build an Executable
 
-Install PyInstaller in your active environment and build a windowed single-file Windows executable:
+Install development dependencies (which include PyInstaller) in your active environment and build a windowed single-file Windows executable:
 
 ```powershell
-pip install pyinstaller
+pip install -r requirements-dev.txt
 pyinstaller --noconfirm --onefile --windowed --name "Image Metadata Viewer" --icon "app/assets/app_icon.ico" --add-data "app/assets;app/assets" --collect-all customtkinter main.py
 ```
 
@@ -110,6 +120,7 @@ dist/Image Metadata Viewer.exe
 image-metadata-viewer/
 ├── main.py
 ├── requirements.txt
+├── requirements-dev.txt
 ├── pytest.ini
 ├── LICENSE
 ├── README.md
@@ -158,9 +169,9 @@ All image decoding, EXIF parsing, color analysis, and batch scanning execute str
 
 - Optional EXIF/GPS metadata stripping into a separate sanitized copy
 - Offline GPS coordinate preview with reverse-geocoding lookup table
-- Native OS drag-and-drop file loading once Tcl/Tk 9 bindings stabilize
+- Drag-and-drop file loading
 - Camera RAW container support (e.g., CR3, NEF, ARW) via optional decoder
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License. See [LICENSE](LICENSE) for details.

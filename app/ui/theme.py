@@ -5,12 +5,11 @@ from __future__ import annotations
 import ctypes
 import sys
 import tkinter as tk
-from pathlib import Path
 from tkinter import font as tkfont
 
 import customtkinter as ctk
 
-from app.config import ThemeMode
+from app.config import ThemeMode, get_assets_dir
 
 # ---------------------------------------------------------------------------
 # Color Tokens (single source of truth for Light & Dark themes)
@@ -81,7 +80,7 @@ SPACE_6 = 24
 # Bundled Font Loading & Detection
 # ---------------------------------------------------------------------------
 
-FONTS_DIR = Path(__file__).resolve().parent.parent / "assets" / "fonts"
+FONTS_DIR = get_assets_dir() / "fonts"
 _FONTS_REGISTERED = False
 
 
